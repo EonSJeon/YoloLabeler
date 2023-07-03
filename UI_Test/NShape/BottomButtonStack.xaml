@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="UI_Test.NShape.BottomButtonStack"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UI_Test.NShape"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="450">
+
+    <Border Style="{DynamicResource DarkBackground}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Width="16" Height="16" Background="#333333" BorderBrush="{x:Null}" Grid.Column="0" x:Name="btnAddNew">
+                <Image Source="{StaticResource add}"></Image>
+            </Button>
+            <Button Width="16" Height="16" Background="#333333" BorderBrush="{x:Null}" Grid.Column="1" x:Name="btnCopy">
+                <Image Source="{StaticResource copy}"></Image>
+            </Button>
+            <Button Width="16" Height="16" Background="#333333" BorderBrush="{x:Null}" Grid.Column="2" x:Name="btnClear">
+                <Image Source="{StaticResource delete}"></Image>
+            </Button>
+            <Button Width="16" Height="16" Background="#333333" BorderBrush="{x:Null}" Grid.Column="3" x:Name="btnLoad">
+                <Image Source="{StaticResource folderOpen}"></Image>
+            </Button>
+            <Button Width="16" Height="16" Background="#333333" BorderBrush="{x:Null}" Grid.Column="4" x:Name="btnSave">
+                <Image Source="{StaticResource save}"></Image>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>

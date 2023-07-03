@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="UI_Test.NShape.LabelListPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UI_Test.NShape"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="315">
+    <UserControl.Resources >
+
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF444444"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="ColumnHeaderHeight" Value="18"/>
+
+            <Setter Property="CanUserAddRows" Value="True" />
+            <Setter Property="CanUserDeleteRows" Value="True" />
+            <Setter Property="CanUserResizeColumns" Value="False" />
+            <Setter Property="CanUserResizeRows" Value="False" />
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="GridLinesVisibility" Value="None" />
+            <Setter Property="HorizontalGridLinesBrush" Value="Black"/>
+        </Style>
+
+        <Style x:Key="GridHeaderStyle" TargetType="{x:Type  DataGridColumnHeader}">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="GridRowStyle" TargetType="{x:Type  DataGridRow}">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF444444"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Background" Value="Black" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="GridCellStyle" TargetType="{x:Type  DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF444444"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Black" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Border x:Name="winLabel" Style="{DynamicResource LightBackground}" Width="295" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Border Style="{DynamicResource DarkBackground}" Width="275" Height="30" Grid.Row="0">
+                    <TextBlock FontSize="20" Foreground="White" FontWeight="Bold" Margin="10,0,0,0"><Run Language="ko-kr" Text="Label"/></TextBlock>
+                </Border>
+                <DataGrid  x:Name="DGLabel" 
+                   Margin="10,0,10,0"
+                   Grid.Row="1"
+                   ScrollViewer.CanContentScroll="True"
+                   ScrollViewer.VerticalScrollBarVisibility="Auto"
+                   RowStyle="{DynamicResource GridRowStyle}"
+                   CellStyle="{DynamicResource GridCellStyle}"
+                   SelectionUnit="FullRow" 
+                   ColumnHeaderStyle="{DynamicResource GridHeaderStyle}"
+                   PreviewKeyDown="Dg_PreviewKeyDown"
+                   ItemsSource="{Binding LabelCollection}"
+                   SelectionChanged="DataGrid_Select"
+                   >
+                    <DataGrid.ContextMenu>
+                        <ContextMenu Foreground="White" Background="Gray" BorderBrush="Yellow" BorderThickness="2">
+                            <MenuItem Header="Save" Click="MenuSave"/>
+                            <MenuItem Header="Load" Click="MenuLoad"/>
+                            <MenuItem Header="Save(YoLo)" Click="MenuSaveYoLo"/>
+                            <MenuItem Header="Clean" Click="MenuClean"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Index" Binding="{Binding LabelIndex }" Width="70"
+                                    CanUserSort="false" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Label" Binding="{Binding Name }" Width="100"   
+                                    CanUserSort="false"  IsReadOnly="True"/>
+                        <DataGridComboBoxColumn x:Name="ComboBoxColumn" Header="Class" Width="80"
+                                        SelectedItemBinding="{Binding LabelClass}"
+                                        ItemsSource="{Binding ValidClass}"
+                                        CanUserSort="false"
+                                        >
+
+                            <DataGridComboBoxColumn.ElementStyle>
+                                <Style TargetType="{x:Type ComboBox}">
+                                    <Setter Property="ItemsSource" Value="{Binding Path=ValidClasses}"/>
+                                </Style>
+                            </DataGridComboBoxColumn.ElementStyle>
+
+                            <DataGridComboBoxColumn.EditingElementStyle>
+                                <Style TargetType="{x:Type ComboBox}" >
+                                    <EventSetter Event="SelectionChanged" Handler="OnComboBoxSelectionChanged" />
+                                    <Setter Property="ItemsSource" Value="{Binding Path=ValidClasses}"/>
+                                </Style>
+                            </DataGridComboBoxColumn.EditingElementStyle>
+                        </DataGridComboBoxColumn>
+                        <!--<DataGridCheckBoxColumn Header="Visible" Binding="{Binding Path=TempVisibility}" Width="30" >
+                    -->
+                        <!--나중에 Visibility로 바꿀 것-->
+
+
+                        <!--Just for Test-->
+                        <!--<DataGridCheckBoxColumn.CellStyle>
+                        <Style>
+                            <EventSetter Event="CheckBox.Checked" Handler="OnCheckBoxesChecked"/>
+                            <EventSetter Event="CheckBox.Unchecked" Handler="OnCheckBoxesUnchecked"/>
+                        </Style>
+                    </DataGridCheckBoxColumn.CellStyle>-->
+                        <!--
+                    
+                    
+                </DataGridCheckBoxColumn>-->
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+                <local:BottomButtonStack Grid.Row="2" Margin="10" x:Name="bottomButtons"/>
+            </Grid>
+
+        </Border>
+    </Grid>
+</UserControl>

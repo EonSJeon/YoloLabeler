@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="UI_Test.NShape.ShapeEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UI_Test.NShape"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1680" Background="#000000">
+    <UserControl.Resources >
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="PART_Border"
+                            Margin="2"
+                            BorderBrush="LightGray"
+                            BorderThickness="3"
+                            Background="Beige">
+                            <ContentPresenter
+                                Margin="10 5 10 5"
+                                ContentSource="Header" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter
+                                    TargetName="PART_Border"
+                                    Property="BorderBrush"
+                                    Value="Red" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Background="#535353">
+
+            <Button Width="90" Height="25" Background="#535353" BorderBrush="{x:Null}" Margin="10,0,0,0" x:Name="btnModeMove">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource move}" Width="25"></Image>
+                    <TextBlock Text="Panning" FontSize="14" Foreground="White" VerticalAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Width="90" Height="25" Background="#535353" BorderBrush="{x:Null}" x:Name="btnModeBox">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource square}" Width="25"></Image>
+                    <TextBlock Text="Square" FontSize="14" Foreground="White" VerticalAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Width="90" Height="25" Background="#535353" BorderBrush="{x:Null}" x:Name="btnModePolyPath">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource path}" Width="25"></Image>
+                    <TextBlock Text="Path" FontSize="14" Foreground="White" VerticalAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Width="90" Height="25" Background="#535353" BorderBrush="{x:Null}" x:Name="btnModeBrush">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource brush}" Width="25"></Image>
+                    <TextBlock Text="Brush" FontSize="14" Foreground="White" VerticalAlignment="Center" ></TextBlock>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+        <Border Name="UBorder" BorderThickness="3" BorderBrush="Black" ClipToBounds="True" Grid.Row="1">
+            <Canvas Name="BB">
+                <Canvas Name="UCanvas"   Canvas.Top="0"  >
+                    <Image Name="UImage"/>
+                </Canvas>
+                <local:PropertyPanel x:Name="panelProperty" MinHeight="235" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <local:ImageListPanel x:Name="panelImage" Canvas.Left="10" Canvas.Top="235" MinHeight="250" MaxHeight="300" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <local:LabelListPanel x:Name="panelLabel" MinHeight="250" MaxHeight="300" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="540"/>
+                <local:ClassListPanel x:Name="panelClass" MinHeight="250" MaxHeight="600" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10" Canvas.Left="1359"/>
+                <local:ColorListPanel x:Name="panelColor" Canvas.Top="599" MinHeight="250" MaxHeight="300" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="1359"/>
+            </Canvas>
+        </Border>
+
+    </Grid>
+
+    <!--<Image Height="1000" Width="1500"
+            Source="https://images.chosun.com/resizer/FNdJnXf3tcGbxCr7l3PPnzdKbsA=/580x386/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/7HRWWQZXIJ7H4ROBOFDWOF76CI.jpg"/>-->
+
+
+    <!--<ItemsControl Background="#FF222222" ItemsSource="{Binding dataSource}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Canvas IsItemsHost="True" Width="1000" Height="900" Background="Gray"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate >
+            <DataTemplate   >
+                <local:BBox   X="{Binding Path=X }"/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        -->
+    <!--<ItemsControl.ItemContainerStyle>
+            <Style TargetType="DataTemplate" >
+                <Style.Triggers>
+                    <EventTrigger a>
+                        <Setter Property="Canvas.Top" Value="{Binding  X, Mode=TwoWay}"  />
+                    </EventTrigger>
+                </Style.Triggers>
+               
+            </Style>
+        </ItemsControl.ItemContainerStyle>-->
+    <!--
+    </ItemsControl>-->
+</UserControl>
